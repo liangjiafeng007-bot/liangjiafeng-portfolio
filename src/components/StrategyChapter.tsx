@@ -28,7 +28,7 @@ function StrategyChapter({ chapter, image, caption }: StrategyChapterProps) {
           <h3 className="text-[clamp(1.6rem,2vw,2.25rem)] font-semibold leading-tight text-ink">{chapter.title}</h3>
           <p className="mt-3 max-w-3xl text-[13px] leading-6 text-[#666666]">{caption}</p>
         </div>
-        <div className="flex shrink-0 items-start gap-5 md:min-w-[360px] md:justify-end md:text-right">
+        <div className="flex shrink-0 items-start gap-4 md:min-w-[360px] md:justify-end md:gap-5 md:text-right">
           <p className="text-[clamp(1.5rem,1.8vw,2rem)] font-semibold leading-none text-accent">{chapter.id}</p>
           <p className="pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">{chapter.english}</p>
         </div>

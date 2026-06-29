@@ -19,11 +19,22 @@ function HeroVideo({
   const sources = useMemo(() => [videoSrc, ...fallbackVideos].filter(Boolean), [fallbackKey, videoSrc]);
   const [sourceIndex, setSourceIndex] = useState(0);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia('(max-width: 767px)').matches : false,
+  );
 
   useEffect(() => {
     setSourceIndex(0);
     setVideoFailed(false);
   }, [fallbackKey, sources.length, videoSrc]);
+
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
 
   const handleError = () => {
     if (sourceIndex < sources.length - 1) {
@@ -45,7 +56,18 @@ function HeroVideo({
       )}
 
       <div className="aspect-video w-full overflow-hidden border border-line bg-white shadow-[0_28px_90px_rgba(17,17,17,0.10)]">
-        {videoFailed || !sources[sourceIndex] ? (
+        {isMobile ? (
+          <img
+            className="h-full w-full bg-white object-cover"
+            src={posterSrc}
+            alt="BLAUPUNKT TVC poster"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            width={1280}
+            height={720}
+          />
+        ) : videoFailed || !sources[sourceIndex] ? (
           <div className="flex h-full w-full flex-col items-center justify-center bg-[#F1F1EF] text-center">
             <p className="whitespace-pre-line text-[12px] font-semibold uppercase tracking-[0.2em] text-[#555555]">
               {placeholder}
@@ -63,6 +85,8 @@ function HeroVideo({
             playsInline
             controls
             preload="metadata"
+            width={1280}
+            height={720}
             onError={handleError}
           />
         )}

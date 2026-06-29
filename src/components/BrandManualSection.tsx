@@ -43,6 +43,8 @@ function BrandManualSection() {
                 alt={`BLAUPUNKT Brand Manual ${image.id}`}
                 className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
                 imageClassName="h-auto w-full object-contain"
+                width={5160}
+                height={2900}
                 placeholder={'BLAUPUNKT Brand Manual\nComing Soon'}
               />
             </motion.div>

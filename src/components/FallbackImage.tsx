@@ -6,6 +6,10 @@ type FallbackImageProps = {
   alt: string;
   className?: string;
   imageClassName?: string;
+  loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
+  width?: number;
+  height?: number;
   placeholder?: string;
 };
 
@@ -15,6 +19,10 @@ function FallbackImage({
   alt,
   className = '',
   imageClassName,
+  loading = 'lazy',
+  fetchPriority = 'auto',
+  width,
+  height,
   placeholder = 'Portfolio Image Placeholder',
 }: FallbackImageProps) {
   const fallbackKey = fallbackSrcs.join('|');
@@ -40,7 +48,11 @@ function FallbackImage({
       src={sources[sourceIndex]}
       alt={alt}
       className={imageClassName ?? className}
-      loading="lazy"
+      loading={loading}
+      decoding="async"
+      fetchPriority={fetchPriority}
+      width={width}
+      height={height}
       onError={() => {
         if (sourceIndex < sources.length - 1) {
           setSourceIndex((index) => index + 1);

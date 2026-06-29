@@ -95,18 +95,18 @@ function StrategyReport() {
     <section id="strategy" className="bg-white py-24 lg:py-36">
       <div className="section-shell">
         <motion.header
-          className="mx-auto max-w-[1560px] pb-24 lg:pb-32"
+          className="mx-auto max-w-[1560px] pb-16 md:pb-24 lg:pb-32"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <p className="eyebrow">Strategy Report</p>
-          <p className="mt-28 max-w-[1240px] text-[clamp(1.75rem,3vw,2.5rem)] font-medium leading-[1.38] text-[#777777]">
+          <p className="mt-14 max-w-[1240px] text-[clamp(1.35rem,5vw,2.5rem)] font-medium leading-[1.42] text-[#777777] md:mt-28 md:leading-[1.38]">
             基于蓝宝在中国市场的品牌处境、授权模式、ODM 产品现状、外部竞争、用户场景与内容电商环境，梳理蓝宝音频如何从单纯依赖品牌 Logo，转向以品牌策略、产品品牌化、CMF、视觉体系、内容转化和商业承接驱动的品牌化经营。
           </p>
 
-          <div className="mt-20 grid border-y border-line md:grid-cols-3">
+          <div className="mt-12 grid border-y border-line md:mt-20 md:grid-cols-3">
             <div className="border-b border-line py-8 md:border-b-0 md:border-r md:pr-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">Report</p>
               <p className="mt-4 text-lg font-semibold leading-7 text-ink">蓝宝中国市场品牌升级策略分析</p>
@@ -128,7 +128,7 @@ function StrategyReport() {
           </div>
         </motion.header>
 
-        <div className="mx-auto grid max-w-[1560px] gap-28 lg:gap-36">
+        <div className="mx-auto grid max-w-[1560px] gap-20 md:gap-28 lg:gap-36">
           {reportChapters.map((chapter) => (
             <StrategyChapter key={chapter.id} chapter={chapter} image={strategyImage(chapter.id)} caption={chapter.caption} />
           ))}

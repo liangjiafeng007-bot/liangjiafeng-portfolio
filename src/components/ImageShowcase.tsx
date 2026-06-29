@@ -8,6 +8,10 @@ type ImageShowcaseProps = {
   alt: string;
   className?: string;
   imageClassName?: string;
+  loading?: 'eager' | 'lazy';
+  fetchPriority?: 'high' | 'low' | 'auto';
+  width?: number;
+  height?: number;
   placeholder?: string;
 };
 
@@ -17,6 +21,10 @@ function ImageShowcase({
   alt,
   className = '',
   imageClassName = '',
+  loading = 'lazy',
+  fetchPriority = 'auto',
+  width,
+  height,
   placeholder = 'Portfolio Image Placeholder',
 }: ImageShowcaseProps) {
   const fallbackKey = fallbackSrcs.join('|');
@@ -74,7 +82,11 @@ function ImageShowcase({
             src={currentSrc}
             alt={alt}
             className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
-            loading="lazy"
+            loading={loading}
+            decoding="async"
+            fetchPriority={fetchPriority}
+            width={width}
+            height={height}
             onError={handleImageError}
           />
         )}
@@ -104,6 +116,7 @@ function ImageShowcase({
               src={currentSrc}
               alt={alt}
               className="max-h-[90vh] max-w-[90vw] object-contain"
+              decoding="async"
               onClick={(event) => event.stopPropagation()}
             />
           </div>,
