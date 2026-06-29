@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Fragment } from 'react';
 import ImageShowcase from './ImageShowcase';
 
 const page = (num: number) => `/assets/portfolio/pages/portfolio-page-${String(num).padStart(2, '0')}.png`;
@@ -42,6 +43,47 @@ const portfolioSections = [
   },
 ];
 
+function FeaturedTvcSection() {
+  return (
+    <motion.article
+      id="portfolio-tvc"
+      className="scroll-mt-24 border-t border-line pt-14"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+    >
+      <div className="mx-auto grid max-w-[1500px] gap-5 md:grid-cols-[80px_minmax(0,1fr)]">
+        <p className="pt-1 text-3xl font-bold leading-none text-accent">TVC</p>
+        <div className="max-w-[1120px]">
+          <p className="eyebrow text-accent">Featured TVC</p>
+          <h3 className="mt-3 text-3xl font-bold leading-tight text-ink md:text-5xl">BLAUPUNKT Brand Film</h3>
+          <p className="mt-3 text-xl font-semibold leading-8 text-ink">蓝宝 TVC 品牌内容视频</p>
+          <p className="mt-5 max-w-3xl text-sm leading-7 text-[#5F5F5F]">
+            以动态影像承接蓝宝品牌视觉、产品场景与内容传播，作为品牌视觉体系与内容资产的一部分，强化用户对品牌调性、场景感和产品感知的第一印象。
+          </p>
+        </div>
+      </div>
+
+      <div className="mx-auto mt-12 max-w-[1400px]">
+        <div className="overflow-hidden border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]">
+          <video
+            src="/assets/video/blaupunkt-tvc.mp4"
+            poster="/assets/video/blaupunkt-tvc-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+            className="block aspect-video w-full bg-[#F1F1EF] object-contain"
+          />
+        </div>
+        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          Brand Film / Visual System / Product Communication
+        </p>
+      </div>
+    </motion.article>
+  );
+}
+
 function PortfolioSection() {
   return (
     <section id="portfolio" className="bg-paper py-24 lg:py-36">
@@ -62,45 +104,47 @@ function PortfolioSection() {
 
         <div className="mt-20 space-y-32">
           {portfolioSections.map((section) => (
-            <motion.article
-              key={section.id}
-              id={`portfolio-${section.id}`}
-              className="scroll-mt-24 border-t border-line pt-14 first:border-t-0 first:pt-0"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.12 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <div className="mx-auto grid max-w-[1500px] gap-5 md:grid-cols-[80px_minmax(0,1fr)]">
-                <p className="pt-1 text-3xl font-bold leading-none text-accent">{section.id}</p>
-                <div className="max-w-[1120px]">
-                  <h3 className="text-3xl font-bold leading-tight text-ink md:text-5xl">{section.title}</h3>
-                  <p className="mt-5 max-w-3xl text-sm leading-7 text-[#5F5F5F]">{section.intro}</p>
+            <Fragment key={section.id}>
+              <motion.article
+                id={`portfolio-${section.id}`}
+                className="scroll-mt-24 border-t border-line pt-14 first:border-t-0 first:pt-0"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.12 }}
+                transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+              >
+                <div className="mx-auto grid max-w-[1500px] gap-5 md:grid-cols-[80px_minmax(0,1fr)]">
+                  <p className="pt-1 text-3xl font-bold leading-none text-accent">{section.id}</p>
+                  <div className="max-w-[1120px]">
+                    <h3 className="text-3xl font-bold leading-tight text-ink md:text-5xl">{section.title}</h3>
+                    <p className="mt-5 max-w-3xl text-sm leading-7 text-[#5F5F5F]">{section.intro}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="mx-auto mt-12 grid max-w-[1500px] gap-16 lg:gap-20">
-                {section.images.map((image, index) => (
-                  <motion.div
-                    key={image}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.08 }}
-                    transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.18), ease: [0.25, 0.1, 0.25, 1] }}
-                  >
-                    <ImageShowcase
-                      src={image}
-                      alt={`${section.id} ${section.title} ${index + 1}`}
-                      className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
-                      imageClassName="h-auto w-full object-contain"
-                      width={5160}
-                      height={2900}
-                      placeholder="Portfolio Image Placeholder"
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.article>
+                <div className="mx-auto mt-12 grid max-w-[1500px] gap-16 lg:gap-20">
+                  {section.images.map((image, index) => (
+                    <motion.div
+                      key={image}
+                      initial={{ opacity: 0, y: 40 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.08 }}
+                      transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.18), ease: [0.25, 0.1, 0.25, 1] }}
+                    >
+                      <ImageShowcase
+                        src={image}
+                        alt={`${section.id} ${section.title} ${index + 1}`}
+                        className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
+                        imageClassName="h-auto w-full object-contain"
+                        width={5160}
+                        height={2900}
+                        placeholder="Portfolio Image Placeholder"
+                      />
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.article>
+              {section.id === '01' ? <FeaturedTvcSection /> : null}
+            </Fragment>
           ))}
         </div>
       </div>

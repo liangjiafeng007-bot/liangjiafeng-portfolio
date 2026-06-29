@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import ImageShowcase from './ImageShowcase';
 
-const brandManualImages = Array.from({ length: 29 }, (_, index) => {
+const brandManualImages = Array.from({ length: 28 }, (_, index) => {
   const number = String(index + 1).padStart(2, '0');
   return {
     id: number,

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { PointerEvent } from 'react';
 import FallbackImage from './FallbackImage';
 
 type GalleryItem = {
@@ -30,7 +31,7 @@ const galleryItems: GalleryItem[] = [
     fallbackVideos: ['/assets/video/blaupunkt-tvc.mp4.mp4'],
     poster: '/assets/video/blaupunkt-tvc-poster.jpg',
     fallbackImages: ['/assets/video/blaupunkt-tvc-poster.png'],
-    targetId: 'portfolio-02',
+    targetId: 'portfolio-tvc',
     size: 'large',
   },
   {
@@ -177,62 +178,77 @@ function scrollToSection(targetId: string) {
   }
 }
 
-function HeroVideoCard({ item, isMobile, forcePoster = false }: { item: GalleryItem; isMobile: boolean; forcePoster?: boolean }) {
-  const sources = [item.video, ...(item.fallbackVideos ?? [])].filter(Boolean) as string[];
-  const [sourceIndex, setSourceIndex] = useState(0);
-  const [videoFailed, setVideoFailed] = useState(sources.length === 0);
-
-  if (isMobile || forcePoster || videoFailed || sources.length === 0) {
-    return (
-      <FallbackImage
-        src={item.poster}
-        fallbackSrcs={item.fallbackImages}
-        alt={item.titleCn}
-        className="aspect-video w-full bg-[#F1F1EF]"
-        imageClassName="block aspect-video w-full bg-white object-cover"
-        loading="eager"
-        fetchPriority="high"
-        width={960}
-        height={540}
-        placeholder={'BLAUPUNKT TVC\nVideo Coming Soon'}
-      />
-    );
-  }
-
+function HeroVideoCard({ item }: { item: GalleryItem }) {
   return (
-    <video
-      src={sources[sourceIndex]}
-      poster={item.poster}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
+    <FallbackImage
+      src={item.poster}
+      fallbackSrcs={item.fallbackImages}
+      alt={item.titleCn}
+      className="aspect-video w-full bg-[#F1F1EF]"
+      imageClassName="block aspect-video w-full bg-white object-cover"
+      loading="eager"
+      fetchPriority="high"
       width={960}
       height={540}
-      className="block aspect-video w-full bg-white object-cover"
-      onError={() => {
-        if (sourceIndex < sources.length - 1) {
-          setSourceIndex((index) => index + 1);
-          return;
-        }
-        setVideoFailed(true);
-      }}
+      placeholder={'BLAUPUNKT TVC\nVideo Coming Soon'}
     />
   );
 }
 
 function HeroHorizontalGallery() {
   const isMobile = useIsMobile();
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const dragStartXRef = useRef(0);
+  const dragStartScrollRef = useRef(0);
+  const dragMovedRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
   const renderedItems = isMobile ? galleryItems : duplicatedItems;
 
+  const endDrag = () => {
+    isDraggingRef.current = false;
+    setIsDragging(false);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (isMobile || event.pointerType !== 'mouse') return;
+    isDraggingRef.current = true;
+    dragMovedRef.current = false;
+    dragStartXRef.current = event.clientX;
+    dragStartScrollRef.current = marqueeRef.current?.scrollLeft ?? 0;
+    setIsDragging(true);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current || !marqueeRef.current) return;
+    const distance = event.clientX - dragStartXRef.current;
+    if (Math.abs(distance) > 6) dragMovedRef.current = true;
+    marqueeRef.current.scrollLeft = dragStartScrollRef.current - distance;
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    endDrag();
+  };
+
   return (
-    <div className="hero-marquee relative z-0 mt-10 overflow-x-auto overflow-y-hidden px-6 pb-8 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:absolute md:inset-x-0 md:bottom-[15vh] md:mt-0 md:overflow-hidden md:px-0 md:pb-4 md:pt-8 md:[scroll-snap-type:none]">
+    <div
+      ref={marqueeRef}
+      className={`hero-marquee relative z-0 mt-10 overflow-x-auto overflow-y-hidden px-6 pb-8 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:absolute md:inset-x-0 md:bottom-[15vh] md:mt-0 md:overflow-hidden md:px-0 md:pb-4 md:pt-8 md:[scroll-snap-type:none] ${isDragging ? 'is-dragging cursor-grabbing' : 'cursor-grab'}`}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={endDrag}
+      onPointerLeave={endDrag}
+    >
       <style>
         {`
           @keyframes heroMarquee {
-            from { transform: translate3d(-50%, 0, 0); }
-            to { transform: translate3d(0, 0, 0); }
+            from { transform: translate3d(0, 0, 0); }
+            to { transform: translate3d(-50%, 0, 0); }
           }
 
           .hero-marquee-track {
@@ -240,6 +256,10 @@ function HeroHorizontalGallery() {
           }
 
           .hero-marquee:hover .hero-marquee-track {
+            animation-play-state: paused;
+          }
+
+          .hero-marquee.is-dragging .hero-marquee-track {
             animation-play-state: paused;
           }
 
@@ -271,11 +291,17 @@ function HeroHorizontalGallery() {
             transition={{ duration: 0.7, delay: Math.min(index * 0.035, 0.3), ease: [0.25, 0.1, 0.25, 1] }}
             whileHover={{ y: -8, scale: 1.035 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => scrollToSection(item.targetId)}
+            onClick={() => {
+              if (dragMovedRef.current) {
+                dragMovedRef.current = false;
+                return;
+              }
+              scrollToSection(item.targetId);
+            }}
           >
             <div className="overflow-hidden border border-line bg-white shadow-[0_20px_70px_rgba(17,17,17,0.06)] transition duration-500 group-hover:shadow-[0_30px_90px_rgba(17,17,17,0.12)]">
               {item.type === 'video' ? (
-                <HeroVideoCard item={item} isMobile={isMobile} forcePoster={index >= galleryItems.length} />
+                <HeroVideoCard item={item} />
               ) : (
                 <FallbackImage
                   src={item.image}
