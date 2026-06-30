@@ -2,17 +2,18 @@ import { Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const navItems = [
-  { label: 'Home', id: 'home' },
-  { label: 'Resume', id: 'resume' },
-  { label: 'Portfolio', id: 'portfolio' },
-  { label: 'Strategy', id: 'strategy' },
-  { label: 'Brand Manual', id: 'brand-manual' },
-  { label: 'Contact', id: 'contact' },
+  { label: '首页', id: 'home' },
+  { label: '简历', id: 'resume' },
+  { label: '作品集', id: 'portfolio' },
+  { label: '策略分析', id: 'strategy' },
+  { label: '品牌手册', id: 'brand-manual' },
+  { label: '联系方式', id: 'contact' },
 ];
 
 function Navbar() {
   const [active, setActive] = useState('home');
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const updateActive = () => {
@@ -23,6 +24,7 @@ function Navbar() {
         return element.offsetTop <= currentY ? item.id : matched;
       }, 'home');
       setActive(current);
+      setScrolled(window.scrollY > 8);
     };
 
     updateActive();
@@ -35,7 +37,13 @@ function Navbar() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-[#FAFAF8]/92 backdrop-blur-md">
+    <header
+      className={`sticky top-0 z-50 border-b transition duration-300 ${
+        scrolled
+          ? 'border-[rgba(0,0,0,0.06)] bg-white/90 shadow-[0_10px_30px_rgba(17,17,17,0.05)] backdrop-blur-md'
+          : 'border-line bg-[#FAFAF8]'
+      }`}
+    >
       <nav className="section-shell flex h-14 items-center justify-between">
         <a href="#home" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">
           LIANG JIAFENG
@@ -46,7 +54,7 @@ function Navbar() {
             <a
               key={item.id}
               href={`#${item.id}`}
-              className={`text-[11px] uppercase tracking-[0.16em] transition ${
+              className={`text-[12px] tracking-[0.12em] transition ${
                 active === item.id ? 'font-semibold text-accent' : 'text-[#5B5B5B] hover:text-accent'
               }`}
             >
@@ -58,9 +66,9 @@ function Navbar() {
         <div className="hidden items-center gap-3 lg:flex">
           <a
             href="#contact"
-            className="rounded-full border border-accent px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent transition hover:bg-accent hover:text-white"
+            className="rounded-full border border-accent px-4 py-1.5 text-[12px] font-semibold tracking-[0.12em] text-accent transition hover:bg-accent hover:text-white"
           >
-            Contact Me
+            联系我
           </a>
         </div>
 
@@ -81,7 +89,7 @@ function Navbar() {
             <a
               key={item.id}
               href={`#${item.id}`}
-                className={`py-3 text-sm uppercase tracking-[0.14em] ${active === item.id ? 'text-accent' : 'text-[#4A4A4A]'}`}
+                className={`py-3 text-sm tracking-[0.12em] ${active === item.id ? 'text-accent' : 'text-[#4A4A4A]'}`}
                 onClick={() => setOpen(false)}
               >
                 {item.label}

@@ -6,6 +6,7 @@ import PortfolioSection from './components/PortfolioSection';
 import StrategyReport from './components/StrategyReport';
 import BrandManualSection from './components/BrandManualSection';
 import Contact from './components/Contact';
+import BackToTop from './components/BackToTop';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <BrandManualSection />
         <Contact />
       </main>
+      <BackToTop />
     </>
   );
 }
