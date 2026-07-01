@@ -10,7 +10,7 @@ type HeroVideoProps = {
 
 function HeroVideo({
   videoSrc = '/assets/video/blaupunkt-tvc.mp4',
-  fallbackVideos = ['/assets/video/blaupunkt-tvc.mp4.mp4'],
+  fallbackVideos = [],
   posterSrc = '/assets/video/blaupunkt-tvc-poster.jpg',
   showMeta = true,
   placeholder = 'BLAUPUNKT TVC\nVideo Coming Soon',

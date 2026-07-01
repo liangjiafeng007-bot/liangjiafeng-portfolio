@@ -22,8 +22,8 @@ const galleryItems: GalleryItem[] = [
     titleCn: '蓝宝 TVC 品牌内容视频',
     type: 'video',
     video: '/assets/video/blaupunkt-tvc.mp4',
-    poster: '/assets/video/blaupunkt-tvc-poster.jpg',
-    fallbackImages: ['/assets/video/blaupunkt-tvc-poster.png'],
+    poster: '/assets/thumbs/hero-tvc.webp',
+    fallbackImages: ['/assets/video/blaupunkt-tvc-poster.jpg', '/assets/video/blaupunkt-tvc-poster.png'],
     targetId: 'portfolio-tvc',
     size: 'large',
   },
@@ -31,8 +31,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-01',
     titleCn: '个人能力',
     type: 'image',
-    image: '/assets/portfolio/p01.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-03.png'],
+    image: '/assets/thumbs/hero-portfolio-01.webp',
+    fallbackImages: ['/assets/portfolio/p01.jpg', '/assets/portfolio/pages-optimized/portfolio-page-03.webp'],
     targetId: 'portfolio-01',
     size: 'medium',
   },
@@ -40,8 +40,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-02',
     titleCn: '蓝宝品牌视觉',
     type: 'image',
-    image: '/assets/portfolio/p02.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-06.png'],
+    image: '/assets/thumbs/hero-portfolio-02.webp',
+    fallbackImages: ['/assets/portfolio/p02.jpg', '/assets/portfolio/pages-optimized/portfolio-page-06.webp'],
     targetId: 'portfolio-02',
     size: 'large',
   },
@@ -49,8 +49,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-03',
     titleCn: '产品品牌化与 CMF',
     type: 'image',
-    image: '/assets/portfolio/p03.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-13.png'],
+    image: '/assets/thumbs/hero-portfolio-03.webp',
+    fallbackImages: ['/assets/portfolio/p03.jpg', '/assets/portfolio/pages-optimized/portfolio-page-13.webp'],
     targetId: 'portfolio-03',
     size: 'medium',
   },
@@ -58,8 +58,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-04',
     titleCn: 'IP 与内容传播',
     type: 'image',
-    image: '/assets/portfolio/p04.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-20.png'],
+    image: '/assets/thumbs/hero-portfolio-04.webp',
+    fallbackImages: ['/assets/portfolio/p04.jpg', '/assets/portfolio/pages-optimized/portfolio-page-20.webp'],
     targetId: 'portfolio-04',
     size: 'small',
   },
@@ -67,8 +67,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-05',
     titleCn: '商业转化',
     type: 'image',
-    image: '/assets/portfolio/p05.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-26.png'],
+    image: '/assets/thumbs/hero-portfolio-05.webp',
+    fallbackImages: ['/assets/portfolio/p05.jpg', '/assets/portfolio/pages-optimized/portfolio-page-26.webp'],
     targetId: 'portfolio-05',
     size: 'medium',
   },
@@ -76,8 +76,8 @@ const galleryItems: GalleryItem[] = [
     id: 'portfolio-06',
     titleCn: '其他项目',
     type: 'image',
-    image: '/assets/brand-manual/brand-manual-15.jpg',
-    fallbackImages: ['/assets/brand-manual/brand-manual-15.png', '/assets/portfolio/pages/portfolio-page-35.png'],
+    image: '/assets/thumbs/hero-portfolio-06.webp',
+    fallbackImages: ['/assets/brand-manual/brand-manual-15.jpg', '/assets/brand-manual/brand-manual-15.png', '/assets/portfolio/pages-optimized/portfolio-page-35.webp'],
     targetId: 'portfolio-06',
     size: 'large',
   },
@@ -85,8 +85,8 @@ const galleryItems: GalleryItem[] = [
     id: 'resume',
     titleCn: '个人简历',
     type: 'image',
-    image: '/assets/resume/resume-01.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-02.png'],
+    image: '/assets/thumbs/hero-resume.webp',
+    fallbackImages: ['/assets/resume/resume-01.jpg', '/assets/portfolio/pages-optimized/portfolio-page-02.webp'],
     targetId: 'resume',
     size: 'small',
   },
@@ -94,7 +94,8 @@ const galleryItems: GalleryItem[] = [
     id: 'strategy',
     titleCn: '品牌策略分析',
     type: 'image',
-    image: '/assets/strategy/strateg-12.jpg',
+    image: '/assets/thumbs/hero-strategy.webp',
+    fallbackImages: ['/assets/strategy/strateg-12.jpg'],
     targetId: 'strategy',
     size: 'large',
   },
@@ -102,8 +103,8 @@ const galleryItems: GalleryItem[] = [
     id: 'brand-manual',
     titleCn: '蓝宝品牌手册',
     type: 'image',
-    image: '/assets/brand-manual/brand-manual-15.jpg',
-    fallbackImages: ['/assets/brand-manual/brand-manual-15.png', '/assets/brand-manual/brand-manual-17.png', '/assets/brand-manual/brand-manual-01.png'],
+    image: '/assets/thumbs/hero-brand-manual.webp',
+    fallbackImages: ['/assets/brand-manual/brand-manual-15.jpg', '/assets/brand-manual/brand-manual-15.png', '/assets/brand-manual/brand-manual-17.png', '/assets/brand-manual/brand-manual-01.png'],
     targetId: 'brand-manual',
     size: 'medium',
   },
@@ -138,7 +139,7 @@ function HeroVideoCard({ item, priority }: { item: GalleryItem; priority: boolea
         poster={item.poster}
         controls
         playsInline
-        preload="metadata"
+        preload="none"
         className="block aspect-video w-full bg-[#F1F1EF] object-contain"
         onClick={(event) => event.stopPropagation()}
       />
@@ -273,7 +274,7 @@ function HeroHorizontalGallery() {
     <div
       ref={scrollerRef}
       data-hero-gallery
-      className={`hero-horizontal-gallery relative z-0 mt-10 overflow-x-auto overflow-y-hidden px-6 pb-8 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:absolute md:inset-x-0 md:bottom-[13vh] md:mt-0 md:px-0 md:pb-4 md:pt-8 md:[scroll-snap-type:none] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+      className={`hero-horizontal-gallery relative z-0 mt-16 overflow-x-auto overflow-y-hidden px-6 pb-8 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:mt-[clamp(72px,10vh,132px)] md:px-0 md:pb-4 md:pt-8 md:[scroll-snap-type:none] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       onMouseEnter={pauseAuto}
       onMouseLeave={() => {
         if (!isDraggingRef.current) resumeAuto(1200);

@@ -9,7 +9,7 @@ function Hero() {
       </div>
 
       <motion.div
-        className="pointer-events-none relative z-10 mx-6 mt-16 max-w-[520px] text-[12px] leading-6 text-muted md:absolute md:left-[clamp(24px,5vw,88px)] md:top-[clamp(116px,15vh,168px)] md:mx-0 md:mt-0 md:text-[13px]"
+        className="pointer-events-none relative z-10 mx-6 mt-16 max-w-[520px] text-[12px] leading-6 text-muted md:ml-[clamp(24px,5vw,88px)] md:mt-0 md:pt-[clamp(116px,15vh,168px)] md:text-[13px]"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}

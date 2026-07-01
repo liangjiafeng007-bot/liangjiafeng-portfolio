@@ -1,12 +1,14 @@
+import { Suspense, lazy } from 'react';
 import Navbar from './components/Navbar';
 import ScrollProgress from './components/ScrollProgress';
 import Hero from './components/Hero';
 import ResumeSection from './components/ResumeSection';
 import PortfolioSection from './components/PortfolioSection';
-import StrategyReport from './components/StrategyReport';
-import BrandManualSection from './components/BrandManualSection';
 import Contact from './components/Contact';
 import BackToTop from './components/BackToTop';
+
+const StrategyReport = lazy(() => import('./components/StrategyReport'));
+const BrandManualSection = lazy(() => import('./components/BrandManualSection'));
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
         <Hero />
         <ResumeSection />
         <PortfolioSection />
-        <StrategyReport />
-        <BrandManualSection />
+        <Suspense fallback={null}>
+          <StrategyReport />
+          <BrandManualSection />
+        </Suspense>
         <Contact />
       </main>
       <BackToTop />

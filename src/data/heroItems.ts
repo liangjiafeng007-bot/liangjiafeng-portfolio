@@ -22,7 +22,6 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-02',
     type: 'video',
     video: '/assets/video/blaupunkt-tvc.mp4',
-    fallbackVideos: ['/assets/video/blaupunkt-tvc.mp4.mp4'],
     poster: '/assets/video/blaupunkt-tvc-poster.jpg',
     image: '/assets/video/blaupunkt-tvc-poster.jpg',
     fallbackImages: ['/assets/video/blaupunkt-tvc-poster.png'],
@@ -35,7 +34,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'resume',
     type: 'image',
     image: '/assets/resume/resume-01.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-02.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-02.webp'],
     fallback: 'Resume\nComing Soon',
   },
   {
@@ -45,7 +44,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-01',
     type: 'image',
     image: '/assets/portfolio/p01.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-03.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-03.webp'],
     fallback: 'Portfolio 01\nComing Soon',
   },
   {
@@ -55,7 +54,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-02',
     type: 'image',
     image: '/assets/portfolio/p02.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-06.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-06.webp'],
     fallback: 'Portfolio 02\nComing Soon',
   },
   {
@@ -65,7 +64,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-03',
     type: 'image',
     image: '/assets/portfolio/p03.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-13.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-13.webp'],
     fallback: 'Portfolio 03\nComing Soon',
   },
   {
@@ -75,7 +74,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-04',
     type: 'image',
     image: '/assets/portfolio/p04.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-20.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-20.webp'],
     fallback: 'Portfolio 04\nComing Soon',
   },
   {
@@ -85,7 +84,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-05',
     type: 'image',
     image: '/assets/portfolio/p05.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-26.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-26.webp'],
     fallback: 'Portfolio 05\nComing Soon',
   },
   {
@@ -95,7 +94,7 @@ export const heroItems: HeroItem[] = [
     targetId: 'portfolio-06',
     type: 'image',
     image: '/assets/portfolio/p06.jpg',
-    fallbackImages: ['/assets/portfolio/pages/portfolio-page-35.png'],
+    fallbackImages: ['/assets/portfolio/pages-optimized/portfolio-page-35.webp'],
     fallback: 'Portfolio 06\nComing Soon',
   },
   {

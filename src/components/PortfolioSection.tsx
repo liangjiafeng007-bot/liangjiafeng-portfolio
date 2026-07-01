@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Fragment } from 'react';
 import ImageShowcase from './ImageShowcase';
 
-const page = (num: number) => `/assets/portfolio/pages/portfolio-page-${String(num).padStart(2, '0')}.png`;
+const page = (num: number) => `/assets/portfolio/pages-optimized/portfolio-page-${String(num).padStart(2, '0')}.webp`;
 
 const portfolioSections = [
   {
