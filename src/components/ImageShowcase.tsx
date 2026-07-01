@@ -31,12 +31,25 @@ function ImageShowcase({
   const sources = useMemo(() => [src, ...fallbackSrcs].filter(Boolean), [fallbackKey, src]);
   const [sourceIndex, setSourceIndex] = useState(0);
   const [failed, setFailed] = useState(sources.length === 0);
+  const [isLoading, setIsLoading] = useState(sources.length > 0);
   const [open, setOpen] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false);
 
   useEffect(() => {
     setSourceIndex(0);
     setFailed(sources.length === 0);
+    setIsLoading(sources.length > 0);
   }, [fallbackKey, sources.length, src]);
+
+  useEffect(() => {
+    if (failed || !sources[sourceIndex]) return undefined;
+
+    const timeout = window.setTimeout(() => {
+      setIsLoading(false);
+    }, 8000);
+
+    return () => window.clearTimeout(timeout);
+  }, [failed, sourceIndex, sources]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -56,7 +69,9 @@ function ImageShowcase({
 
   const currentSrc = sources[sourceIndex];
   const handleImageError = () => {
+    setIsLoading(false);
     if (sourceIndex < sources.length - 1) {
+      setIsLoading(true);
       setSourceIndex((index) => index + 1);
       return;
     }
@@ -69,9 +84,13 @@ function ImageShowcase({
         type="button"
         className={`group block cursor-zoom-in overflow-hidden text-left ${className}`}
         onClick={() => {
-          if (!failed) setOpen(true);
+          if (!failed) {
+            setPreviewLoading(true);
+            setOpen(true);
+          }
         }}
         aria-label={`Open image preview: ${alt}`}
+        aria-busy={isLoading}
       >
         {failed || !currentSrc ? (
           <div className={`flex min-h-[260px] w-full items-center justify-center whitespace-pre-line bg-[#F1F1EF] text-center text-sm text-muted ${imageClassName}`}>
@@ -87,6 +106,7 @@ function ImageShowcase({
             fetchPriority={fetchPriority}
             width={width}
             height={height}
+            onLoad={() => setIsLoading(false)}
             onError={handleImageError}
           />
         )}
@@ -112,11 +132,14 @@ function ImageShowcase({
             >
               <X size={20} />
             </button>
+            {previewLoading ? <div className="absolute text-sm font-semibold text-white/70">{placeholder}</div> : null}
             <img
               src={currentSrc}
               alt={alt}
-              className="max-h-[90vh] max-w-[90vw] object-contain"
+              className={`max-h-[90vh] max-w-[90vw] object-contain ${previewLoading ? 'opacity-0' : ''}`}
               decoding="async"
+              onLoad={() => setPreviewLoading(false)}
+              onError={() => setPreviewLoading(false)}
               onClick={(event) => event.stopPropagation()}
             />
           </div>,
