@@ -274,7 +274,7 @@ function HeroHorizontalGallery() {
     <div
       ref={scrollerRef}
       data-hero-gallery
-      className={`hero-horizontal-gallery relative z-0 mt-16 overflow-x-auto overflow-y-hidden px-6 pb-8 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:mt-[clamp(72px,10vh,132px)] md:px-0 md:pb-4 md:pt-8 md:[scroll-snap-type:none] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+      className={`hero-horizontal-gallery relative z-0 mt-16 overflow-x-auto overflow-y-hidden px-6 pb-12 pt-4 [-webkit-overflow-scrolling:touch] [scroll-snap-type:x_mandatory] md:mt-[clamp(72px,10vh,132px)] md:px-0 md:pb-10 md:pt-8 md:[scroll-snap-type:none] ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       onMouseEnter={pauseAuto}
       onMouseLeave={() => {
         if (!isDraggingRef.current) resumeAuto(1200);

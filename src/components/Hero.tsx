@@ -3,7 +3,7 @@ import HeroHorizontalGallery from './HeroHorizontalGallery';
 
 function Hero() {
   return (
-    <section id="home" className="relative min-h-[100svh] overflow-hidden bg-[#FAFAF8] pb-8 md:min-h-[100vh] md:pb-0">
+    <section id="home" className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[#FAFAF8] pb-8 md:min-h-[100vh] md:pb-10">
       <div className="pointer-events-none mx-6 pt-20 md:absolute md:left-[clamp(24px,4vw,72px)] md:top-24 md:mx-0 md:pt-0">
         <div className="h-px w-16 bg-accent" />
       </div>
@@ -30,7 +30,7 @@ function Hero() {
       <HeroHorizontalGallery />
 
       <motion.div
-        className="relative z-10 mx-6 mt-10 text-[13px] leading-6 text-muted md:absolute md:bottom-[clamp(28px,5vw,72px)] md:left-[clamp(24px,5vw,88px)] md:mx-0 md:mt-0"
+        className="relative z-10 mx-6 mt-8 text-[13px] leading-6 text-muted md:ml-[clamp(24px,5vw,88px)] md:mt-10"
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.18, ease: [0.25, 0.1, 0.25, 1] }}

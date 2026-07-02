@@ -38,10 +38,10 @@ function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b transition duration-300 ${
+      className={`sticky top-0 z-[80] border-b backdrop-blur-md transition duration-300 ${
         scrolled
-          ? 'border-[rgba(0,0,0,0.06)] bg-white/90 shadow-[0_10px_30px_rgba(17,17,17,0.05)] backdrop-blur-md'
-          : 'border-line bg-[#FAFAF8]'
+          ? 'border-[rgba(0,0,0,0.04)] bg-white/70 shadow-none'
+          : 'border-[rgba(0,0,0,0.035)] bg-[#FAFAF8]/70 shadow-none'
       }`}
     >
       <nav className="section-shell flex h-14 items-center justify-between">
