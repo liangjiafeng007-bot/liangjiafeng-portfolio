@@ -13,8 +13,8 @@ const pageName = (num: number) => `portfolio-page-${String(num).padStart(2, '0')
 const page = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.webp`;
 const originalPage = (num: number) => `/assets/portfolio/pages/${pageName(num)}.png`;
 const portfolio06Page = (num: number): PortfolioImage => ({
-  src: page(num),
-  fallbackSrcs: [originalPage(num)],
+  src: originalPage(num),
+  fallbackSrcs: [page(num)],
 });
 
 const portfolioSections = [
