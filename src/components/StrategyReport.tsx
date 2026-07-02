@@ -2,6 +2,11 @@ import { motion } from 'framer-motion';
 import StrategyChapter from './StrategyChapter';
 
 const strategyImage = (id: string) => `/assets/strategy/strateg-${id}.jpg`;
+const strategyFallbackImages = (id: string) => [
+  `/assets/strategy/strateg-${id}.png`,
+  `/assets/strategy/strateg-${id}.webp`,
+  `/assets/strategy/strateg-${id}.jpeg`,
+];
 
 const reportChapters = [
   {
@@ -130,7 +135,13 @@ function StrategyReport() {
 
         <div className="mx-auto grid max-w-[1560px] gap-20 md:gap-28 lg:gap-36">
           {reportChapters.map((chapter) => (
-            <StrategyChapter key={chapter.id} chapter={chapter} image={strategyImage(chapter.id)} caption={chapter.caption} />
+            <StrategyChapter
+              key={chapter.id}
+              chapter={chapter}
+              image={strategyImage(chapter.id)}
+              fallbackSrcs={strategyFallbackImages(chapter.id)}
+              caption={chapter.caption}
+            />
           ))}
         </div>
       </div>

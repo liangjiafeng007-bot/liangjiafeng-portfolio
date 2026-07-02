@@ -65,16 +65,6 @@ function ImageShowcase({
   }, [currentSrc]);
 
   useEffect(() => {
-    if (failed || !sources[sourceIndex] || !isLoading) return undefined;
-
-    const timeout = window.setTimeout(() => {
-      advanceSource();
-    }, 7000);
-
-    return () => window.clearTimeout(timeout);
-  }, [failed, isLoading, sourceIndex, sources]);
-
-  useEffect(() => {
     if (!open) {
       setPreviewLoading(false);
       return undefined;
@@ -118,9 +108,7 @@ function ImageShowcase({
         ) : (
           <div className="relative w-full">
             {isLoading ? (
-              <div className={`absolute inset-0 z-10 flex min-h-[260px] w-full items-center justify-center bg-[#F8F8F6] text-center text-sm text-muted ${imageClassName}`}>
-                {placeholder}
-              </div>
+              <div className={`absolute inset-0 z-10 min-h-[260px] w-full bg-[#F8F8F6] ${imageClassName}`} aria-hidden="true" />
             ) : null}
             <img
               key={currentSrc}

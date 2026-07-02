@@ -10,10 +10,11 @@ type StrategyChapterItem = {
 type StrategyChapterProps = {
   chapter: StrategyChapterItem;
   image: string;
+  fallbackSrcs?: string[];
   caption: string;
 };
 
-function StrategyChapter({ chapter, image, caption }: StrategyChapterProps) {
+function StrategyChapter({ chapter, image, fallbackSrcs = [], caption }: StrategyChapterProps) {
   return (
     <motion.article
       id={`strategy-${chapter.id}`}
@@ -36,6 +37,7 @@ function StrategyChapter({ chapter, image, caption }: StrategyChapterProps) {
 
       <ImageShowcase
         src={image}
+        fallbackSrcs={fallbackSrcs}
         alt={`${chapter.id} ${chapter.title}`}
         className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
         imageClassName="h-auto w-full object-contain"
