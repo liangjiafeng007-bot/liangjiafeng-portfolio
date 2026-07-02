@@ -44,6 +44,18 @@ function ImageShowcase({
 
   const currentSrc = sources[sourceIndex];
 
+  const advanceSource = () => {
+    if (sourceIndex < sources.length - 1) {
+      setSourceIndex((index) => index + 1);
+      setIsLoading(true);
+      setFailed(false);
+      return;
+    }
+
+    setIsLoading(false);
+    setFailed(true);
+  };
+
   useEffect(() => {
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth > 0) {
@@ -53,14 +65,14 @@ function ImageShowcase({
   }, [currentSrc]);
 
   useEffect(() => {
-    if (failed || !sources[sourceIndex]) return undefined;
+    if (failed || !sources[sourceIndex] || !isLoading) return undefined;
 
     const timeout = window.setTimeout(() => {
-      setIsLoading(false);
-    }, 8000);
+      advanceSource();
+    }, 7000);
 
     return () => window.clearTimeout(timeout);
-  }, [failed, sourceIndex, sources]);
+  }, [failed, isLoading, sourceIndex, sources]);
 
   useEffect(() => {
     if (!open) {
@@ -82,13 +94,7 @@ function ImageShowcase({
   }, [open]);
 
   const handleImageError = () => {
-    if (sourceIndex < sources.length - 1) {
-      setIsLoading(true);
-      setSourceIndex((index) => index + 1);
-      return;
-    }
-    setIsLoading(false);
-    setFailed(true);
+    advanceSource();
   };
 
   return (
@@ -110,22 +116,30 @@ function ImageShowcase({
             {placeholder}
           </div>
         ) : (
-          <img
-            src={currentSrc}
-            alt={alt}
-            ref={imageRef}
-            className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
-            loading={loading}
-            decoding="async"
-            fetchPriority={fetchPriority}
-            width={width}
-            height={height}
-            onLoad={() => {
-              setIsLoading(false);
-              setFailed(false);
-            }}
-            onError={handleImageError}
-          />
+          <div className="relative w-full">
+            {isLoading ? (
+              <div className={`absolute inset-0 z-10 flex min-h-[260px] w-full items-center justify-center bg-[#F8F8F6] text-center text-sm text-muted ${imageClassName}`}>
+                {placeholder}
+              </div>
+            ) : null}
+            <img
+              key={currentSrc}
+              src={currentSrc}
+              alt={alt}
+              ref={imageRef}
+              className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${isLoading ? 'opacity-0' : 'opacity-100'} ${imageClassName}`}
+              loading={loading}
+              decoding="async"
+              fetchPriority={fetchPriority}
+              width={width}
+              height={height}
+              onLoad={() => {
+                setIsLoading(false);
+                setFailed(false);
+              }}
+              onError={handleImageError}
+            />
+          </div>
         )}
       </button>
 

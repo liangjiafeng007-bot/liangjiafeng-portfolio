@@ -169,6 +169,8 @@ function PortfolioSection() {
                           alt={`${section.id} ${section.title} ${index + 1}`}
                           className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
                           imageClassName="h-auto w-full object-contain"
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          fetchPriority={index === 0 ? 'high' : 'auto'}
                           width={5160}
                           height={2900}
                           placeholder="Portfolio Image Placeholder"
