@@ -5,8 +5,11 @@ const brandManualImages = Array.from({ length: 28 }, (_, index) => {
   const number = String(index + 1).padStart(2, '0');
   return {
     id: number,
-    src: `/assets/brand-manual/brand-manual-${number}.jpg`,
-    fallbackSrcs: [`/assets/brand-manual/brand-manual-${number}.png`],
+    src: `/assets/brand-manual-optimized/brand-manual-${number}.webp`,
+    fallbackSrcs: [
+      `/assets/brand-manual/brand-manual-${number}.png`,
+      `/assets/brand-manual/brand-manual-${number}.jpg`,
+    ],
   };
 });
 
@@ -43,6 +46,8 @@ function BrandManualSection() {
                 alt={`BLAUPUNKT Brand Manual ${image.id}`}
                 className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
                 imageClassName="h-auto w-full object-contain"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'auto'}
                 width={5160}
                 height={2900}
                 placeholder={'BLAUPUNKT Brand Manual\nComing Soon'}

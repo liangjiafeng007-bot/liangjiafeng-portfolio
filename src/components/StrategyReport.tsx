@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import StrategyChapter from './StrategyChapter';
 
-const strategyImage = (id: string) => `/assets/strategy/strateg-${id}.jpg`;
+const strategyImage = (id: string) => `/assets/strategy-optimized/strateg-${id}.webp`;
 const strategyFallbackImages = (id: string) => [
+  `/assets/strategy/strateg-${id}.jpg`,
   `/assets/strategy/strateg-${id}.png`,
-  `/assets/strategy/strateg-${id}.webp`,
   `/assets/strategy/strateg-${id}.jpeg`,
 ];
 
