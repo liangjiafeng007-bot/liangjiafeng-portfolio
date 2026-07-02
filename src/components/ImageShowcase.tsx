@@ -107,15 +107,12 @@ function ImageShowcase({
           </div>
         ) : (
           <div className="relative w-full">
-            {isLoading ? (
-              <div className={`absolute inset-0 z-10 min-h-[260px] w-full bg-[#F8F8F6] ${imageClassName}`} aria-hidden="true" />
-            ) : null}
             <img
               key={currentSrc}
               src={currentSrc}
               alt={alt}
               ref={imageRef}
-              className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${isLoading ? 'opacity-0' : 'opacity-100'} ${imageClassName}`}
+              className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
               loading={loading}
               decoding="async"
               fetchPriority={fetchPriority}

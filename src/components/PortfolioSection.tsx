@@ -16,10 +16,7 @@ const page = (num: number): PortfolioImage => ({
   src: optimizedPage(num),
   fallbackSrcs: [originalPage(num)],
 });
-const portfolio06Page = (num: number): PortfolioImage => ({
-  src: optimizedPage(num),
-  fallbackSrcs: [originalPage(num)],
-});
+const portfolio06Page = (num: number): PortfolioImage => originalPage(num);
 
 const portfolioSections = [
   {
