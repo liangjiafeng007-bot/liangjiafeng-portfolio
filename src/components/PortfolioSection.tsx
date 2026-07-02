@@ -2,7 +2,20 @@ import { motion } from 'framer-motion';
 import { Fragment } from 'react';
 import ImageShowcase from './ImageShowcase';
 
-const page = (num: number) => `/assets/portfolio/pages-optimized/portfolio-page-${String(num).padStart(2, '0')}.webp`;
+type PortfolioImage =
+  | string
+  | {
+      src: string;
+      fallbackSrcs?: string[];
+    };
+
+const pageName = (num: number) => `portfolio-page-${String(num).padStart(2, '0')}`;
+const page = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.webp`;
+const originalPage = (num: number) => `/assets/portfolio/pages/${pageName(num)}.png`;
+const portfolio06Page = (num: number): PortfolioImage => ({
+  src: page(num),
+  fallbackSrcs: [originalPage(num)],
+});
 
 const portfolioSections = [
   {
@@ -39,7 +52,18 @@ const portfolioSections = [
     id: '06',
     title: '其他项目 / 视觉与品牌案例',
     intro: '呈现 REAL YOUNG、青少年学习耳机、Kodak 与其他视觉品牌案例。',
-    images: [page(29), page(30), page(31), page(32), page(33), page(34), page(35), page(36), page(37), page(38)],
+    images: [
+      portfolio06Page(29),
+      portfolio06Page(30),
+      portfolio06Page(31),
+      portfolio06Page(32),
+      portfolio06Page(33),
+      portfolio06Page(34),
+      portfolio06Page(35),
+      portfolio06Page(36),
+      portfolio06Page(37),
+      portfolio06Page(38),
+    ],
   },
 ];
 
@@ -122,25 +146,31 @@ function PortfolioSection() {
                 </div>
 
                 <div className="mx-auto mt-12 grid max-w-[1500px] gap-16 lg:gap-20">
-                  {section.images.map((image, index) => (
-                    <motion.div
-                      key={image}
-                      initial={{ opacity: 0, y: 40 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.08 }}
-                      transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.18), ease: [0.25, 0.1, 0.25, 1] }}
-                    >
-                      <ImageShowcase
-                        src={image}
-                        alt={`${section.id} ${section.title} ${index + 1}`}
-                        className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
-                        imageClassName="h-auto w-full object-contain"
-                        width={5160}
-                        height={2900}
-                        placeholder="Portfolio Image Placeholder"
-                      />
-                    </motion.div>
-                  ))}
+                  {section.images.map((image, index) => {
+                    const imageSrc = typeof image === 'string' ? image : image.src;
+                    const fallbackSrcs = typeof image === 'string' ? [] : image.fallbackSrcs;
+
+                    return (
+                      <motion.div
+                        key={imageSrc}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.08 }}
+                        transition={{ duration: 0.8, delay: Math.min(index * 0.03, 0.18), ease: [0.25, 0.1, 0.25, 1] }}
+                      >
+                        <ImageShowcase
+                          src={imageSrc}
+                          fallbackSrcs={fallbackSrcs}
+                          alt={`${section.id} ${section.title} ${index + 1}`}
+                          className="w-full border border-line bg-white shadow-[0_24px_80px_rgba(17,17,17,0.06)]"
+                          imageClassName="h-auto w-full object-contain"
+                          width={5160}
+                          height={2900}
+                          placeholder="Portfolio Image Placeholder"
+                        />
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </motion.article>
               {section.id === '01' ? <FeaturedTvcSection /> : null}

@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type ImageShowcaseProps = {
@@ -34,12 +34,23 @@ function ImageShowcase({
   const [isLoading, setIsLoading] = useState(sources.length > 0);
   const [open, setOpen] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setSourceIndex(0);
     setFailed(sources.length === 0);
     setIsLoading(sources.length > 0);
   }, [fallbackKey, sources.length, src]);
+
+  const currentSrc = sources[sourceIndex];
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (image?.complete && image.naturalWidth > 0) {
+      setIsLoading(false);
+      setFailed(false);
+    }
+  }, [currentSrc]);
 
   useEffect(() => {
     if (failed || !sources[sourceIndex]) return undefined;
@@ -52,7 +63,10 @@ function ImageShowcase({
   }, [failed, sourceIndex, sources]);
 
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open) {
+      setPreviewLoading(false);
+      return undefined;
+    }
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setOpen(false);
@@ -67,14 +81,13 @@ function ImageShowcase({
     };
   }, [open]);
 
-  const currentSrc = sources[sourceIndex];
   const handleImageError = () => {
-    setIsLoading(false);
     if (sourceIndex < sources.length - 1) {
       setIsLoading(true);
       setSourceIndex((index) => index + 1);
       return;
     }
+    setIsLoading(false);
     setFailed(true);
   };
 
@@ -100,13 +113,17 @@ function ImageShowcase({
           <img
             src={currentSrc}
             alt={alt}
+            ref={imageRef}
             className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
             loading={loading}
             decoding="async"
             fetchPriority={fetchPriority}
             width={width}
             height={height}
-            onLoad={() => setIsLoading(false)}
+            onLoad={() => {
+              setIsLoading(false);
+              setFailed(false);
+            }}
             onError={handleImageError}
           />
         )}
@@ -127,6 +144,7 @@ function ImageShowcase({
               aria-label="Close preview"
               onClick={(event) => {
                 event.stopPropagation();
+                setPreviewLoading(false);
                 setOpen(false);
               }}
             >
