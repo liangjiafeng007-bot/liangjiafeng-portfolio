@@ -10,11 +10,15 @@ type PortfolioImage =
     };
 
 const pageName = (num: number) => `portfolio-page-${String(num).padStart(2, '0')}`;
-const page = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.webp`;
 const originalPage = (num: number) => `/assets/portfolio/pages/${pageName(num)}.png`;
+const optimizedPage = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.webp`;
+const page = (num: number): PortfolioImage => ({
+  src: optimizedPage(num),
+  fallbackSrcs: [originalPage(num)],
+});
 const portfolio06Page = (num: number): PortfolioImage => ({
-  src: originalPage(num),
-  fallbackSrcs: [page(num)],
+  src: optimizedPage(num),
+  fallbackSrcs: [originalPage(num)],
 });
 
 const portfolioSections = [
@@ -63,6 +67,7 @@ const portfolioSections = [
       portfolio06Page(36),
       portfolio06Page(37),
       portfolio06Page(38),
+      portfolio06Page(39),
     ],
   },
 ];

@@ -11,8 +11,10 @@ const StrategyReport = lazy(() => import('./components/StrategyReport'));
 const BrandManualSection = lazy(() => import('./components/BrandManualSection'));
 
 function App() {
+  const isDarkPreview = new URLSearchParams(window.location.search).get('theme') === 'dark';
+
   return (
-    <>
+    <div className={isDarkPreview ? 'dark-preview' : undefined}>
       <ScrollProgress />
       <Navbar />
       <main>
@@ -26,7 +28,7 @@ function App() {
         <Contact />
       </main>
       <BackToTop />
-    </>
+    </div>
   );
 }
 

@@ -113,6 +113,121 @@ button {
   }
 }
 
+.dark-preview {
+  --color-bg: #080808;
+  --color-surface: #101010;
+  --color-soft: #161616;
+  --color-text: #f5f5f5;
+  --color-body: #c8c8c8;
+  --color-muted: #8a8a8a;
+  --color-line: rgba(255, 255, 255, 0.12);
+  min-height: 100vh;
+  background: #080808;
+  color: #f5f5f5;
+}
+
+.dark-preview main,
+.dark-preview section,
+.dark-preview footer,
+.dark-preview article {
+  background-color: #080808 !important;
+  color: #f5f5f5;
+}
+
+.dark-preview header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  background: rgba(5, 5, 5, 0.65) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(12px);
+}
+
+.dark-preview header a,
+.dark-preview header button {
+  color: #c8c8c8;
+}
+
+.dark-preview header a:hover,
+.dark-preview header a.text-accent,
+.dark-preview .text-accent {
+  color: #e6007e !important;
+}
+
+.dark-preview .bg-paper,
+.dark-preview .bg-white,
+.dark-preview .bg-\[\#FAFAF8\] {
+  background-color: #080808 !important;
+}
+
+.dark-preview .text-ink,
+.dark-preview .cn-title,
+.dark-preview h1,
+.dark-preview h2,
+.dark-preview h3 {
+  color: #f5f5f5 !important;
+}
+
+.dark-preview .text-muted,
+.dark-preview .eyebrow {
+  color: #8a8a8a !important;
+}
+
+.dark-preview .body-copy,
+.dark-preview p,
+.dark-preview li,
+.dark-preview .text-\[\#4A4A4A\],
+.dark-preview .text-\[\#5F5F5F\],
+.dark-preview .text-\[\#6F6F6F\],
+.dark-preview .text-\[\#777777\],
+.dark-preview .text-\[\#8A8A8A\],
+.dark-preview .text-\[\#222222\],
+.dark-preview .text-\[\#555555\],
+.dark-preview .text-\[\#565656\],
+.dark-preview .text-\[\#5B5B5B\] {
+  color: #b8b8b8 !important;
+}
+
+.dark-preview .border-line,
+.dark-preview .thin-line,
+.dark-preview .border-t,
+.dark-preview .border-b,
+.dark-preview .border,
+.dark-preview .border-y,
+.dark-preview .border-r {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark-preview .bg-\[\#F1F1EF\] {
+  background-color: #161616 !important;
+}
+
+.dark-preview .bg-white\/70,
+.dark-preview .bg-white\/88,
+.dark-preview .bg-white\/95,
+.dark-preview .white-card,
+.dark-preview .pill {
+  background-color: rgba(16, 16, 16, 0.82) !important;
+}
+
+.dark-preview .image-frame,
+.dark-preview [class*='shadow-\[0_20px_70px'],
+.dark-preview [class*='shadow-\[0_24px_80px'],
+.dark-preview [class*='shadow-\[0_28px_90px'],
+.dark-preview [class*='shadow-\[0_30px_90px'] {
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.46), 0 0 0 1px rgba(255, 255, 255, 0.03) !important;
+}
+
+.dark-preview img,
+.dark-preview video {
+  filter: none !important;
+}
+
+.dark-preview button[aria-label='返回顶部'],
+.dark-preview .fixed.bottom-6 {
+  background-color: rgba(16, 16, 16, 0.9) !important;
+  color: #c8c8c8 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
