@@ -29,23 +29,31 @@ function ImageShowcase({
 }: ImageShowcaseProps) {
   const fallbackKey = fallbackSrcs.join('|');
   const sources = useMemo(() => [src, ...fallbackSrcs].filter(Boolean), [fallbackKey, src]);
+  const webpSources = useMemo(() => sources.filter((source) => source.toLowerCase().endsWith('.webp')), [sources]);
+  const rasterSources = useMemo(() => {
+    const compatibleSources = sources.filter((source) => !source.toLowerCase().endsWith('.webp'));
+    return compatibleSources.length > 0 ? compatibleSources : sources;
+  }, [sources]);
   const [sourceIndex, setSourceIndex] = useState(0);
-  const [failed, setFailed] = useState(sources.length === 0);
-  const [isLoading, setIsLoading] = useState(sources.length > 0);
+  const [failed, setFailed] = useState(rasterSources.length === 0);
+  const [isLoading, setIsLoading] = useState(rasterSources.length > 0);
+  const [allowWebp, setAllowWebp] = useState(true);
   const [open, setOpen] = useState(false);
   const [previewLoading, setPreviewLoading] = useState(false);
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     setSourceIndex(0);
-    setFailed(sources.length === 0);
-    setIsLoading(sources.length > 0);
-  }, [fallbackKey, sources.length, src]);
+    setFailed(rasterSources.length === 0);
+    setIsLoading(rasterSources.length > 0);
+    setAllowWebp(true);
+  }, [fallbackKey, rasterSources.length, src]);
 
-  const currentSrc = sources[sourceIndex];
+  const currentSrc = rasterSources[sourceIndex];
+  const webpSrcSet = webpSources.join(', ');
 
   const advanceSource = () => {
-    if (sourceIndex < sources.length - 1) {
+    if (sourceIndex < rasterSources.length - 1) {
       setSourceIndex((index) => index + 1);
       setIsLoading(true);
       setFailed(false);
@@ -84,6 +92,13 @@ function ImageShowcase({
   }, [open]);
 
   const handleImageError = () => {
+    if (allowWebp && webpSources.length > 0) {
+      setAllowWebp(false);
+      setIsLoading(true);
+      setFailed(false);
+      return;
+    }
+
     advanceSource();
   };
 
@@ -107,23 +122,26 @@ function ImageShowcase({
           </div>
         ) : (
           <div className="relative w-full">
-            <img
-              key={currentSrc}
-              src={currentSrc}
-              alt={alt}
-              ref={imageRef}
-              className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
-              loading={loading}
-              decoding="async"
-              fetchPriority={fetchPriority}
-              width={width}
-              height={height}
-              onLoad={() => {
-                setIsLoading(false);
-                setFailed(false);
-              }}
-              onError={handleImageError}
-            />
+            <picture>
+              {allowWebp && webpSrcSet ? <source srcSet={webpSrcSet} type="image/webp" /> : null}
+              <img
+                key={currentSrc}
+                src={currentSrc}
+                alt={alt}
+                ref={imageRef}
+                className={`block w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02] ${imageClassName}`}
+                loading={loading}
+                decoding="async"
+                fetchPriority={fetchPriority}
+                width={width}
+                height={height}
+                onLoad={() => {
+                  setIsLoading(false);
+                  setFailed(false);
+                }}
+                onError={handleImageError}
+              />
+            </picture>
           </div>
         )}
       </button>
