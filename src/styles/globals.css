@@ -63,7 +63,8 @@ a {
 }
 
 section[id],
-article[id] {
+article[id],
+footer[id] {
   scroll-margin-top: 88px;
 }
 

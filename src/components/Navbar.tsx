@@ -55,18 +55,29 @@ function Navbar() {
     setVisible(true);
   };
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    showNavigation();
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
+
   return (
     <>
       <div
-        className="fixed left-0 top-0 z-[90] h-[60px] w-full bg-transparent"
+        className="fixed left-0 top-0 z-[80] h-[60px] w-full bg-transparent"
         aria-hidden="true"
         onMouseEnter={showNavigation}
         onClick={showNavigation}
       />
 
       <header
-        className={`fixed left-0 top-0 z-[100] w-full border-b backdrop-blur-md transition-[opacity,transform,border-color,background-color] duration-300 ease-out ${
-          visible || open || hoveringNav ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
+        className={`fixed left-0 top-0 z-[999] w-full border-b backdrop-blur-md transition-[opacity,transform,border-color,background-color] duration-300 ease-out ${
+          visible || open || hoveringNav ? 'pointer-events-auto translate-y-0 opacity-100' : 'pointer-events-none -translate-y-full opacity-0'
         } ${
           scrolled
             ? 'border-[rgba(0,0,0,0.04)] bg-white/70 shadow-none'
@@ -81,7 +92,14 @@ function Navbar() {
         }}
       >
         <nav className="section-shell flex h-14 items-center justify-between">
-          <a href="#home" className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink">
+          <a
+            href="#home"
+            className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink"
+            onClick={(event) => {
+              event.preventDefault();
+              scrollToSection('home');
+            }}
+          >
             LIANG JIAFENG
           </a>
 
@@ -90,6 +108,10 @@ function Navbar() {
               <a
                 key={item.id}
                 href={`#${item.id}`}
+                onClick={(event) => {
+                  event.preventDefault();
+                  scrollToSection(item.id);
+                }}
                 className={`text-[12px] tracking-[0.12em] transition ${
                   active === item.id ? 'font-semibold text-accent' : 'text-[#5B5B5B] hover:text-accent'
                 }`}
@@ -102,6 +124,10 @@ function Navbar() {
           <div className="hidden items-center gap-3 lg:flex">
             <a
               href="#contact"
+              onClick={(event) => {
+                event.preventDefault();
+                scrollToSection('contact');
+              }}
               className="rounded-full border border-accent px-4 py-1.5 text-[12px] font-semibold tracking-[0.12em] text-accent transition hover:bg-accent hover:text-white"
             >
               联系我
@@ -131,9 +157,10 @@ function Navbar() {
                   className={`py-3 text-sm tracking-[0.12em] ${
                     active === item.id ? 'text-accent' : 'text-[#4A4A4A]'
                   }`}
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.preventDefault();
                     setOpen(false);
-                    showNavigation();
+                    scrollToSection(item.id);
                   }}
                 >
                   {item.label}
