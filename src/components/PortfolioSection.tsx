@@ -12,11 +12,15 @@ type PortfolioImage =
 const pageName = (num: number) => `portfolio-page-${String(num).padStart(2, '0')}`;
 const originalPage = (num: number) => `/assets/portfolio/pages/${pageName(num)}.png`;
 const optimizedPage = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.webp`;
+const optimizedJpegPage = (num: number) => `/assets/portfolio/pages-optimized/${pageName(num)}.jpg`;
 const page = (num: number): PortfolioImage => ({
   src: optimizedPage(num),
   fallbackSrcs: [originalPage(num)],
 });
-const portfolio06Page = (num: number): PortfolioImage => originalPage(num);
+const portfolio06Page = (num: number): PortfolioImage => ({
+  src: optimizedJpegPage(num),
+  fallbackSrcs: [originalPage(num)],
+});
 
 const portfolioSections = [
   {
@@ -151,7 +155,7 @@ function PortfolioSection() {
                   {section.images.map((image, index) => {
                     const imageSrc = typeof image === 'string' ? image : image.src;
                     const fallbackSrcs = typeof image === 'string' ? [] : image.fallbackSrcs;
-                    const shouldPreload = index === 0 || section.id === '06';
+                    const shouldPreload = index === 0;
 
                     return (
                       <motion.div
