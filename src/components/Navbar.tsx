@@ -60,10 +60,20 @@ function Navbar() {
     if (!element) return;
 
     showNavigation();
-    element.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    setActive(id);
+    setOpen(false);
+
+    const top = element.getBoundingClientRect().top + window.pageYOffset - 88;
+    const targetTop = Math.max(top, 0);
+
+    try {
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth',
+      });
+    } catch {
+      window.scrollTo(0, targetTop);
+    }
   };
 
   return (
