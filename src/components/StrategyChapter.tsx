@@ -24,13 +24,13 @@ function StrategyChapter({ chapter, image, fallbackSrcs = [], caption }: Strateg
       viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
     >
-      <div className="mb-7 grid gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
+      <div className="mb-8 grid gap-5 md:grid-cols-[minmax(0,1fr)_auto] md:items-start">
         <div className="max-w-[880px]">
-          <h3 className="text-[clamp(1.6rem,2vw,2.25rem)] font-semibold leading-tight text-ink">{chapter.title}</h3>
-          <p className="mt-3 max-w-3xl text-[13px] leading-6 text-[#666666]">{caption}</p>
+          <h3 className="text-[clamp(1.45rem,1.7vw,2rem)] font-semibold leading-tight text-ink">{chapter.title}</h3>
+          <p className="mt-3 max-w-2xl text-[13px] leading-6 text-[#666666]">{caption}</p>
         </div>
-        <div className="flex shrink-0 items-start gap-4 md:min-w-[360px] md:justify-end md:gap-5 md:text-right">
-          <p className="text-[clamp(1.5rem,1.8vw,2rem)] font-semibold leading-none text-accent">{chapter.id}</p>
+        <div className="flex shrink-0 items-start gap-4 md:min-w-[320px] md:justify-end md:gap-5 md:text-right">
+          <p className="text-[clamp(1.35rem,1.55vw,1.8rem)] font-semibold leading-none text-accent">{chapter.id}</p>
           <p className="pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">{chapter.english}</p>
         </div>
       </div>
